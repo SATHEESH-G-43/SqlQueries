@@ -1,0 +1,28 @@
+-- single line comment
+/*
+Multi line comment
+So hungry, need to eat
+Time is 14:32
+*/
+show character set;
+show charset;
+show char set;
+
+show databases;
+
+create database Sangam;
+drop database sangam;
+
+create database Sangam;
+drop schema sangam;
+
+create database sangam;
+drop database sangam;
+
+drop database sangam;
+drop database if exists sangam;
+
+create database sangam;
+drop schema if exists sangam;
+
+create database sangam;
