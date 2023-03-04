@@ -26,3 +26,65 @@ create database sangam;
 drop schema if exists sangam;
 
 create database sangam;
+
+
+
+show character set;
+show databases;
+
+create database Employee;
+
+use employee;
+show tables;
+
+use sangam;
+show tables;
+
+create table staff(id int primary key,
+name varchar(20),grade decimal(3,2)
+);
+
+describe staff;
+
+select * from staff;
+
+alter table staff add column salary int;
+
+describe staff;
+
+alter table staff add column JoiningYear year;
+
+describe staff;
+
+alter table staff drop column joiningyear;
+describe staff;
+
+
+insert into staff values(1,"Satg",5.52,100
+);
+
+insert into staff values(2,"Dinesh",6.6,400
+);
+insert into staff values(4,"Sarvo",6.6,500
+);
+insert into staff values(6,"Arun",6.6,400
+);
+
+
+insert into staff values(5,"Ravi",9.4,900),
+(7,"Muthu",4.25,1000),
+(3,"prem",2.89,4000),
+(8,"mani",9.56,800);
+
+insert into staff(id,salary) values(12,54544),
+(25,4120);
+
+select * from staff;
+select id,name from staff;
+select name,salary from staff;
+
+
+select id from staff where salary=400;
+select name from staff where salary=400;
+select id,name from staff where salary>=500;
+select id,name,salary from staff where salary>=500;
