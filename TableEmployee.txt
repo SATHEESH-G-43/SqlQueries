@@ -149,7 +149,7 @@ ELSE 10 END
 ),ename;
 
 
--- COUNT, AVG, SUM, MAX, MIN
+-- Aggregate funtions---COUNT, AVG, SUM, MAX, MIN
 
 SELECT * FROM employee
 WHERE JobDesc="Architect";
@@ -262,4 +262,133 @@ SELECT curday();        -- This function does not exist
 SELECT month(now());
 SELECT current_month();  -- This function does not exist
 SELECT curmonth();       -- This function does not exist
+
+SELECT year(now());
+SELECT current_year();  -- This function does not exist
+SELECT curyear();       -- This function does not exist
+
+SELECT hour(now());
+SELECT minute(now());
+SELECT second(now());
+
+-- DATE DIFFERENCE
+
+SELECT datediff(curdate(),"2024-04-25");  -- Getting Negative  value
+SELECT datediff(curdate(),"2022-05-15");  -- Geting Positive value
+
+-- DATE INTERVAL
+
+SELECT date_add(curdate(), INTERVAL 1 DAY) As After_one_day;
+SELECT date_add(curdate(), INTERVAL 1 WEEK) As After_one_week;
+SELECT date_add(curdate(), INTERVAL 1 MONTH) As After_one_month;
+SELECT date_add(curdate(), INTERVAL 1 YEAR) As After_one_year;
+
+
+-- DATE INTERVAL in single SELECT query
+
+SELECT current_date() 'Start date',
+ date_add(curdate(), INTERVAL 1 DAY) As After_one_day,
+ date_add(curdate(), INTERVAL 1 WEEK) As After_one_week,
+ date_add(curdate(), INTERVAL 1 MONTH) As After_one_month,
+ date_add(curdate(), INTERVAL 1 YEAR) As After_one_year;
+
+
+-- GROUP BY
+
+SELECT * FROM employee;
+
+SELECT Jobdesc, avg(salary)
+FROM employee
+GROUP BY Jobdesc;
+
+SELECT JObdesc, count(eid)
+FROM employee
+GROUP BY Jobdesc;
+
+SELECT Jobdesc, count(eid)
+FROM employee
+group by jobdesc
+HAVING count(eid) > 1;  -- WHERE filter rows where as HAVING filter GROUPS
+
+SELECT Jobdesc, count(eid)
+FROM employee
+group by jobdesc
+ORDER BY jobdesc;
+
+SELECT Jobdesc, count(eid)
+FROM employee
+group by jobdesc
+HAVING count(eid) > 1
+ORDER BY JObdesc;
+
+SELECT JObdesc, count(eid)
+from employee
+WHERE salary > 2000000
+group by jobdesc
+HAVING count(eid) > 1
+order by jobdesc;
+
+
+
+CREATE TABLE Company(
+ eid int,
+ ename varchar(20),
+ jobdesc varchar(20),
+ salary int
+ );
+ 
+ describe company;
+ 
+ -- MODIFY
+ 
+ ALTER TABLE company
+ MODIFY eid int primary key auto_increment;
+ 
+ ALTER TABLE company
+ MODIFY ename varchar(20) NOT NULL;
+ 
+ -- SET DEFAULT
+ 
+ ALTER TABLE company 
+ ALTER jobdesc set default "Un Asssigned";
+ 
+ -- CONSTRAINT CHECK
+ 
+ ALTER TABLE company
+ ADD constraint Check_salary check (salary > 1000000);
+ 
+ describe company;
+ 
+ INSERT INTO company(ename,salary) VALUES
+ ("satg",1800000);
+ 
+INSERT INTO company(ename,salary) VALUES ("sarvo",1500000),
+ ("sakthi",2000000);
+ 
+ select * from company;
+ 
+ALTER TABLE company 
+MODIFY ename varchar(20);
+ 
+  describe company;
+  
+  -- DROP DEFAULT
+  
+  ALTER TABLE company
+  alter jobdesc DROP default;
+ 
+   describe company;
+INSERT INTO company(ename,jobdesc,salary) VALUES ("keerthi","MotorMech",500000); -- Constraint chck_salary is violated
+select * from company;
+
+-- DROP CHECK
+
+ALTER TABLE company
+DROP check check_salary;
+
+describe company;
+INSERT INTO company(ename,jobdesc,salary) VALUES ("keerthi","MotorMech",500000);
+select * from company;
+
+
 
