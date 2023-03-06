@@ -147,3 +147,55 @@ WHEN "ARCHITECT" THEN 4
 WHEN "ADMIN" THEN 5
 ELSE 10 END
 ),ename;
+
+
+-- DATE
+
+ALTER TABLE employee ADD COLUMN HireDate DATE;
+SELECT * FROM employee;
+
+UPDATE employee SET HireDate="2023-03-06";
+
+UPDATE employee SET HireDate="2023-03-10" 
+WHERE JobDesc="Architect";
+
+UPDATE employee SET HireDate="2023-02-08" 
+WHERE JobDesc="Sales";
+
+SELECT now();
+SELECT now() Date;
+SELECT now() As Date;
+
+SELECT date(now());
+SELECT date(now()) CurrentDate;
+SELECT date(now()) As CurrentDate;
+
+SELECT current_date();
+SELECT current_date() As Date;
+SELECT curdate();
+SELECT curdate() As Date;
+
+SELECT date_format(curdate(), "%d/%m/%Y") As Date;
+
+SELECT time(now());
+SELECT time(now()) CurrentTime;
+SELECT current_time();
+SELECT curtime();
+
+SELECT day(now());
+SELECT current_day();   -- This function does not exist
+SELECT curday();        -- This function does not exist
+
+SELECT month(now());
+SELECT current_month();  -- This function does not exist
+SELECT curmonth();       -- This function does not exist
+
+SELECT year(now());
+SELECT current_year();  -- This function does not exist
+SELECT curyear();       -- This function does not exist
+
+SELECT hour(now());
+SELECT minute(now());
+SELECT second(now());
+
+
