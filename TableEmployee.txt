@@ -149,6 +149,72 @@ ELSE 10 END
 ),ename;
 
 
+-- COUNT, AVG, SUM, MAX, MIN
+
+SELECT * FROM employee
+WHERE JobDesc="Architect";
+
+SELECT COUNT(*) FROM employee
+WHERE JobDesc="Architect";
+
+SELECT COUNT(*) As Architect_count FROM employee
+WHERE JobDesc="Architect";
+
+SELECT AVG(salary) As Avg_Salary_of_Manager
+FROM employee
+WHERE JobDesc="Architect";
+
+SELECT SUM(salary) AS Sum_salary_of_Architect
+FROM employee
+WHERE JobDesc="Manager";
+
+SELECT MIN(salary) AS Minimun_salary_of_Manager
+FROM employee
+WHERE JobDesc="Manager";
+
+SELECT MAX(salary) AS Max_salary_of_Architect
+FROM employee
+WHERE JobDesc="Architect";
+
+select * from employee;
+
+-- UPPER CASE
+
+SELECT upper(ename) As ename
+FROM employee;
+
+SELECT ucase(ename) As ename
+FROM employee;
+
+SELECT ucase(ename) As ename,salary
+FROM employee;
+
+-- CHAR_LENGTH
+
+SELECT ename,char_length(ename) AS Character_count
+FROM employee;
+
+-- CONCATENATE
+
+SELECT ename,concat("Rs.",salary) As salary
+FROM employee;
+
+SELECT ename , concat("Rs.",format(salary,0)) As salary
+FROM employee;
+
+-- LEFT, RIGHT , MIDDLE
+
+SELECT ename, left(Jobdesc,3) As Left_3_letters  -- First three letters from left
+FROM employee;           
+
+select jobdesc from employee;
+
+SELECT ename, right(Jobdesc,3) As Right_3_letters -- Last three letters from right
+FROM employee;
+
+SELECT ename, mid(Jobdesc,3)  Not_works_properly-- Not works
+FROM employee; 
+
 -- DATE
 
 ALTER TABLE employee ADD COLUMN HireDate DATE;
@@ -175,7 +241,14 @@ SELECT current_date() As Date;
 SELECT curdate();
 SELECT curdate() As Date;
 
-SELECT date_format(curdate(), "%d/%m/%Y") As Date;
+SELECT date_format(curdate(), "%d/%m/%Y") As Date; -- Y four digit year
+SELECT date_format(curdate(), "%d-%m-%Y") As Date; 
+SELECT date_format(curdate(), "%d.%m.%Y") As Date; 
+SELECT date_format(curdate(), "%d %m %Y") As Date; 
+
+SELECT date_format(curdate(),"%d/%m/%y") As Date;  -- y two digit year
+SELECT date_format(curdate(),"%D %M %Y") As Date;  -- y two digit year
+SELECT date_format(curdate(),"%D %M %y") As Date;
 
 SELECT time(now());
 SELECT time(now()) CurrentTime;
@@ -189,13 +262,4 @@ SELECT curday();        -- This function does not exist
 SELECT month(now());
 SELECT current_month();  -- This function does not exist
 SELECT curmonth();       -- This function does not exist
-
-SELECT year(now());
-SELECT current_year();  -- This function does not exist
-SELECT curyear();       -- This function does not exist
-
-SELECT hour(now());
-SELECT minute(now());
-SELECT second(now());
-
 
