@@ -1,0 +1,149 @@
+use employee;    /* To activate database */
+
+-- CREATING TABLE
+create table Employee(EId int primary key,
+Ename varchar(20),
+JobDesc varchar(20),
+Salary int
+);
+
+describe employee;     /* To view fields and their data types */
+
+-- INSERT VALUES SEPARATELY
+
+insert into employee values(1,"Ram","Admin",1000000);
+insert into employee values(2,"Harini","Manager",2500000);
+
+-- INSERT BULK  VALUES
+
+insert into employee values(3,"Georgr","Sales",2000000),
+(4,"Remya","Sales",1300000),
+(5,"Meena","HR",2000000),
+(6,"Ashok","MAnager",3000000),
+(7,"Abdul","HR",2000000),
+(8,"Remya","Developer",1000000),
+(9,"Ragu","CEO",8000000),
+(10,"Aravind","Manager",2800000),
+(11,"Akshay","Developer",1000000),
+(12,"John","Admin",2200000),
+(13,"Abinaya","Developer",2100000);
+insert into employee values (14,"Abdul","Analyst",2700000);
+insert into employee values (15,"Harini","Analyst",3200000);
+
+select * from employee;
+select eid from employee;
+select ename from employee;
+select jobdesc from employee;
+
+-- WHERE CLAUSE
+
+select * from employee where ename="Remya";
+
+select * from employee where ename!="Remya";
+select * from employee where ename<>"Remya";
+
+select eid,jobdesc from employee where ename="Remya";
+select * from employee where salary>2500000;
+select * from employee where salary<2500000 and jobdesc="Developer";
+select * from employee where jobdesc="hr" or jobdesc="sales";
+select * from employee where jobdesc in ("hr","sales");
+select * from employee where jobdesc not in ("hr","sales");
+select * from employee where salary between 2000000 and 3000000;
+select * from employee 
+where salary  between 2000000 and 3000000 and eid between 5 and 10;
+-- LIMIT 
+select * from employee limit 5;
+select * from employee limit 2;
+select ename,salary from employee where salary>2000000 limit 5;
+
+-- LIKE 
+-- WILDCARDS %(Zero or more characters) , _ (Only one character
+
+select * from employee where ename like 'A%';
+select * from employee where ename like '%A';
+select * from employee where ename like 'a%a';
+select * from employee where ename like '__a%';
+select * from employee where ename like '%r%';
+select * from employee where ename like '%o%';
+select * from employee where jobdesc like '%r';
+
+select * from employee;
+
+-- UPDATE and SET
+
+update employee set jobdesc="Architect"; -- This will update entire rows as Architect
+-- DROP and TRUNCATE
+drop table employee;       -- Erase entire table with ROWS and COLUMNS
+truncate table employee;   -- Erase only ROWS not COLUMNS and their data types
+
+update employee set jobdesc="Architect" where jobdesc="Developer";
+
+-- ORDER BY -- values ordered ascending order by default
+
+select * from employee;
+Select * from employee order by ename;
+select * from employee order by salary;
+select * from employee order by jobdesc;
+select * from employee order by eid;
+select * from employee order by ename,eid; -- Only ename will be ordered
+select * from employee order by eid,ename;  -- Only eid will be ordered
+select * from employee order by ename,jobdesc;  -- Only ename will be ordered
+select * from employee order by jobdesc,ename;  -- Only jobdesc will be ordered
+select ename,eid from employee order by ename,eid; -- Only ename will be ordered
+select ename,eid from employee order by eid,ename;  -- Only eid will be ordered
+
+-- ORDER BY with Descending order
+
+select * from employee order by ename desc;
+select * from employee order by eid desc;
+select * from employee order by salary desc;
+select * from employee order by jobdesc desc;
+
+
+-- DISTINCT
+
+select distinct ename from employee;
+select distinct jobdesc from employee;
+select distinct salary from employee;
+select distinct ename,jobdesc from employee;        -- DISTINCT not work
+select distinct ename,jobdesc,salary from employee; -- DISTINCT not work
+select distinct * from employee;                -- DISTINCT not work    
+
+-- DISTINCT and ORDER BY
+
+select distinct ename from employee order by ename;
+select distinct jobdesc from employee order by jobdesc;
+describe employee;
+select distinct salary from employee order by salary;
+
+select * from employee order by ename;
+select distinct * from employee order by ename; -- DISTINCT not work
+ select distinct ename,jobdesc from employee order by ename,jobdesc;  -- DISTINCT will not work and only ename will be ordered
+ 
+select * from employee where jobdesc="Architect";
+select * from employee where jobdesc="Architect" order by salary;
+select * from employee where jobdesc="Architect" order by ename;
+select * from employee where jobdesc="Architect" order by eid;
+
+-- Giving preference using ORDER BY
+
+select * from employee order by jobdesc;
+SELECT DISTINCT JOBDESC FROM employee;
+
+select * from employee order by (CASE jobdesc
+WHEN "CEO" THEN 1
+WHEN "MANAGER" THEN 2
+WHEN "HR" THEN 3
+WHEN "ARCHITECT" THEN 4
+WHEN "ADMIN" THEN 5
+ELSE 10 END
+);
+
+select * from employee order by (CASE jobdesc
+WHEN "CEO" THEN 1
+WHEN "MANAGER" THEN 2
+WHEN "HR" THEN 3
+WHEN "ARCHITECT" THEN 4
+WHEN "ADMIN" THEN 5
+ELSE 10 END
+),ename;
