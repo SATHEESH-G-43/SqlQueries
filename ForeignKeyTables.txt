@@ -1,0 +1,117 @@
+use employee;
+
+CREATE TABLE BranchAdress(
+BranchId int primary key auto_increment,
+BranchName varchar(20) NOT NULL,
+BranchAdd varchar(50)
+);
+
+describe BranchAdress;
+
+alter table branchAdress
+modify branchadd varchar(50) NOT NULL;
+
+alter table branchadress
+rename BranchAddress;
+
+describe branchaddress;
+
+INSERT INTO branchaddress(branchname,branchadd) VALUES
+("Chennai","No 5,second floor,Broadway"),
+("Coimbatore","No 3, 3rd cross street,Gandhiputam"),
+("Trichy","No 2,ABC complex,Woraiyur");
+
+select * from branchaddress;
+
+alter table branchaddress
+rename column branchid to Brid;
+describe branchaddress;
+
+
+-- CREATE TABLE with FOREIGN KEY
+
+CREATE TABLE BranchEmployee(
+Eid int primary key auto_increment,
+Ename varchar(20) NOT NULL,
+Jobdesc varchar(20) NOT NULL,
+Salary int NOT NULL,
+Branchid int,
+CONSTRAINT Fk_branchid foreign key(Branchid) references Branchaddress(Branchid)
+);
+
+-- DROP foreign key to avoid name collapse and then recreate
+
+ alter table branchemployee
+ drop constraint Fk_branchid;
+
+-- RECREATE foreign key after dropping
+
+alter table branchemployee
+add constraint Fk_brid foreign key(Branchid) references branchaddress(Brid);
+					-- Branchid -- current table's column
+                    
+describe branchemployee;
+describe branchaddress;
+
+-- ADD foreign for table branchaddress
+
+ALTER TABLE branchaddress
+ADD column EmpId int,
+ADD constraint Fk_eid foreign key(EmpId) references branchemployee(eid);
+
+-- RENAME empid to Managerid for understanding
+
+alter table branchaddress
+rename column Empid to ManagerId;
+
+describe branchaddress;
+
+-- We can add another one that is new foreign key for managerid column
+
+alter table branchaddress
+ADD constraint Fk_empid foreign key(Managerid) references branchemployee(eid);
+
+-- DROP un used foreign key fk_eid
+
+ALTER TABLE branchaddress
+DROP constraint fk_eid;
+
+-- INSERT values for Table Branchemployee
+describe branchemployee;
+select * from branchemployee;
+INSERT INTO branchemployee(ename,jobdesc,salary,branchid) VALUES
+("Satg","Manager",1500000,2),
+("Arun","Admin",2000000,3),
+("Ravi","Analyst",2500000,1),
+("Muhtu","Manager",5000000,1),
+("Sakthi","Teller",1000000,3),
+("Dinesh","Manager",8000000,3),
+("Ramesh","HR",3000000,2),
+("sarvo","Sales",1600000,1),
+("Suresh","HR",2700000,2),
+("Bala","CEO",9500000,1);
+
+select * from branchemployee;
+
+
+-- INSERT VALUES FOR ManagerId column
+
+select * from branchaddress;
+select *from branchemployee;
+
+UPDATE branchaddress 
+set Managerid=1 
+WHERE Brid=2;
+
+UPDATE branchaddress
+set Managerid=4
+WHERE brid=1;
+
+UPDATE branchaddress
+set Managerid=6
+WHERE brid=3;
+
+select * from branchaddress;
+
+select Managerid from branchaddress;
+
