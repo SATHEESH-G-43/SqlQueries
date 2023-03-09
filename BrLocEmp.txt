@@ -494,3 +494,95 @@ show tables from employee;
 show table status from employee;
 
 ---------------------------------
+
+-- ------------SUB QUERIES----------- 
+use employee;
+
+select * from brempinfo;
+select * from brinfo;
+                                    -- To fetch CHENNAI branch employee details
+select * from brempinfo
+where branchid=(select brid from brinfo where brname="chennai");
+
+                                     -- To fetch COIMBATORE branch employee details
+select * from brempinfo
+where branchid=(select brid from brinfo where brname="Coimbatore");
+
+  -- EMPLOYEES WITH MINIMUM SALARY
+  
+  select * from brempinfo
+  where salary=(select min(salary) from brempinfo);
+  
+  -- WHERE EXISTS USED WITH SUB QUERY
+  -- BRANCHES CONTAINING ATLEAST ONE ADMIN
+  
+    select BrId,BrName from brinfo;
+    
+  select BrId,BrName from brinfo 
+  where exists( select jobdesc from brempinfo where jobdesc="ADMIN" and brempinfo.branchid=brinfo.brid );
+  
+    select BrId,BrName from brinfo 
+  where exists( select * from brempinfo where jobdesc="ADMIN" and brempinfo.branchid=brinfo.brid );
+  
+   -- ANY
+   -- BRANCH INFO IN WHICH ANY EMPLOYER GETS MORE THAN 25L SALARY
+   
+select * from brinfo
+where brid=ANY(select branchid from brempinfo where salary > 250000);
+/*
+select * from brinfo
+where brid=ALL(select branchid from brempinfo where salary > 250000  -- Incorrect
+*/
+-- ALL
+-- EMPLOYEE NOT WORKING IN CHENNAI or COIMBATORE BRANCH
+
+select brid from brinfo where brname in ("chennai" , "coimbatore");
+
+select * from brempinfo
+where branchid <> ALL(select brid from brinfo where brname in ("chennai" , "coimbatore"));
+
+select * from brempinfo;
+select * from brinfo;
+
+-- CREATE VIEW , To fetch a particular result to use frequently
+
+create view Br_emp
+as 
+select l.EId,l.EName,l.JobDesc,r.BrName
+from brempinfo as l        
+inner join brinfo as r
+on l.branchid=r.brid
+order by l.eid;
+
+---------------
+ describe Br_emp;
+ 
+ select * from Br_emp;       -- VIEW
+ select * from brempinfo;    -- TABLE
+ 
+ select * from Br_emp where jobdesc="manager";    -- FROM VIEW
+ select * from brempinfo where jobdesc="manager"; -- FROM TABLE
+ 
+ select ename from Br_emp where jobdesc="Manager";
+
+ select ename,brname from Br_emp where jobdesc="Manager";
+ 
+ -- MODIFIY VIEW
+ 
+ create or replace view Br_emp                -- Can also use CREATE OR REPLACE VIEW query to create new view
+ AS
+ select l.EId,l.EName,l.JobDesc,r.BrName
+from brempinfo as l        
+inner join brinfo as r
+on l.branchid=r.brid;                          -- Avoiding ORDER BY
+ 
+ 
+ select * from br_emp;
+ 
+ -- DROP VIEW
+ 
+ drop view br_emp;
+ 
+ 
+-----------------------------------
+
